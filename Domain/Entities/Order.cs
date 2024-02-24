@@ -25,15 +25,15 @@ public class Order : BaseEntity{
         Validate();
     }
 
-    protected override void Validate()
+    protected void Validate()
     {
         var errors = new List<string>();
 
-        errors.AddRange(string.IsNullOrEmpty(Number) ? new[] { "O campo Number não pode estar vazio." } : Enumerable.Empty<string>());
-        errors.AddRange(CustomerId.Equals(null) ? new[] { "O campo CustomerId não pode estar vazio." } : Enumerable.Empty<string>());
-        errors.AddRange(Customer is null ? new[] { "O campo Customer não pode estar vazio" } : Enumerable.Empty<string>()
+        errors.AddRange(string.IsNullOrEmpty(Number) ? ["The Number field cannot be empty."] : Enumerable.Empty<string>());
+        errors.AddRange(CustomerId.Equals(null) ? ["The CustomerId field cannot be empty."] : Enumerable.Empty<string>());
+        errors.AddRange(Customer is null ? ["The Customer field cannot be empty."] : Enumerable.Empty<string>()
         );
 
-        base.Validate();
+        base.Validate(errors);
     }
 }

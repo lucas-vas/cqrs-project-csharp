@@ -1,3 +1,4 @@
+using CQRS_Shop.Application.Features.Customer.Commands.CreateCustomer;
 using CQRS_Shop.Application.Features.Customer.Queries.GetAllCustomer;
 using CQRS_Shop.Application.Features.Customer.Queries.GetCustomerById;
 using CQRS_Shop.Controllers.Base;
@@ -16,11 +17,17 @@ public class CustomerController : MainController
     public async Task<IActionResult> GetAll()
     {
         var query = new GetAllCustomerQuery();
-        return Ok(Mediator.Send(query));
+        return Ok(await Mediator.Send(query));
     }
 
-    [HttpGet("GetById")]
-    public async Task<IActionResult> GetById([FromQuery] GetCustomerByIdQuery query){
-        return Ok(Mediator.Send(query));
+    [HttpGet("GetById/{id}")]
+    public async Task<IActionResult> GetById(int id){
+        var query = new GetCustomerByIdQuery(id: id);
+        return Ok(await Mediator.Send(query));
+    }
+
+    [HttpPost("CreateCustomer")]
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command){
+        return Ok(await Mediator.Send(command));
     }
 }

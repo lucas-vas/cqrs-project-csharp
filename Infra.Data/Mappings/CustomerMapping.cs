@@ -29,6 +29,10 @@ public class CustomerMapping : IEntityTypeConfiguration<Customer>
             .HasColumnName("DOCUMENT");
         });
 
+        builder.HasMany(x => x.Orders)
+        .WithOne(o => o.Customer)
+        .HasForeignKey(o => o.CustomerId);
+
         builder.Property(x => x.CreatedBy)
         .HasColumnName("CREATED_BY");
 

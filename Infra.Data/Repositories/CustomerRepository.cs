@@ -1,27 +1,23 @@
 using CQRS_Shop.Domain.Entities;
 using CQRS_Shop.Infra.Data.Context;
 using CQRS_Shop.Infra.Data.InterfacesRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CQRS_Shop.Infra.Data.Repositories;
 
-public class CustomerRepository : ICustomerRepository{
-
-    private readonly ApplicationDbContext Db;
-
-    public CustomerRepository(ApplicationDbContext db)
-    {
-        Db = db;
-    }
-
+public class CustomerRepository(ApplicationDbContext db) : ICustomerRepository
+{
     public async Task<List<Customer>> GetAll() {
-        var result = Db.Customers.ToList();
+        var result = await db.Customers.ToListAsync();
         return result;
     }
 
     public async Task<Customer> GetById(int id) {
-        var result = Db.Customers
-                    .FirstOrDefault(x => x.Id == id);
-
+        var result = await db.Customers.FirstOrDefaultAsync(x => x.Id == id);
         return result;
+    }
+
+    public async Task Insert(Customer customer){
+        await db.Customers.AddAsync(customer);
     }
 }

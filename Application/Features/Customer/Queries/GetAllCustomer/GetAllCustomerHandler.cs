@@ -5,8 +5,8 @@ using MediatR;
 
 namespace CQRS_Shop.Application.Features.Customer.Queries.GetAllCustomer;
 
-public class GetAllCustomerHandler : IRequestHandler<GetAllCustomerQuery, List<CustomerResponse>> {
-
+public class GetAllCustomerHandler : IRequestHandler<GetAllCustomerQuery, List<CustomerResponse>> 
+{
     private readonly ICustomerRepository _customerRepository;
 
     public GetAllCustomerHandler(
@@ -18,7 +18,7 @@ public class GetAllCustomerHandler : IRequestHandler<GetAllCustomerQuery, List<C
 
     public async Task<List<CustomerResponse>> Handle(GetAllCustomerQuery request, CancellationToken cancellationToken)
     {
-        var listCustomer = _customerRepository.GetAll();
+        var listCustomer = await _customerRepository.GetAll();
         var listCustomerResponse = MapCustomerResponse(listCustomer);
 
         return listCustomerResponse;
